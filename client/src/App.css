@@ -1,0 +1,80 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+img{
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.fruit-baskets{
+  height: 10rem;
+  width: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-main{
+  min-width: 49vw;
+  height: 90vh;
+  display: flex;
+  align-items:center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  margin: auto;
+}
+
+.fruits-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+}
+
+span{
+  font-size: large;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.left{
+  background-color: rgba(231, 231, 216, 0.769);
+}
+
+.vendor-icon{
+  border: 0.5px solid #494444;
+}
+
+@media screen and (max-width: 600px) {
+  .main{
+    flex-direction: column;
+  }
+  .sub-main{
+    min-width: 95vw;
+    min-height: 30vh;
+    max-height: 50vh;
+    display: flex;
+    align-items:center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+  }
+}
