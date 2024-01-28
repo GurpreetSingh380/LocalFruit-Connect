@@ -5,13 +5,10 @@ import Camera from "../components/Camera.jsx"
 import cam from '../images/camera.png'
 import noCam from '../images/withoutcamera.png'
 
+// ROUTE_API: 5b3ce3597851110001cf62481ef60d247e734872a246c96548cfbd76
 
 function App() {
   const [camUse, setCamUse] = useState(null);
-  const handleMode = (event) => {
-    setCamUse((event.target.value === "camera")?true:false);
-  };
-
   return (
     <div>
       {camUse===null && (

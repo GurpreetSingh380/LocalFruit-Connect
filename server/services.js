@@ -2,7 +2,7 @@ import FormData from 'form-data'
 import {google} from 'googleapis'
 import  fs  from 'fs'
 import axios from 'axios'
-
+import colors from 'colors'
 
 // Locations: 
 export const locations = new Map();
@@ -18,7 +18,7 @@ for(let i=0; i<5; i++){
 const CLIENT_ID="534827030960-v4si5kctopvog12lkiumo8dug1hoe1qe.apps.googleusercontent.com",
 	CLIENT_SECRET="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",
 	REDIRECT_URI="https://developers.google.com/oauthplayground",
-	REFRESH_TOKEN="1//04ZK2lQhghFUUCgYIARAAGAQSNwF-L9Ir6o4k35Iq4yponRDbATxryqq40Cz3kBDGsyIXQTSIL3SWRIB7hacSCCXv-xPXBSARPZc";
+	REFRESH_TOKEN="1//04TtIQ7lADMeGCgYIARAAGAQSNwF-L9Ir_lhq3mhoegfWSUKSGX5EPgcTgoP4t6ONW9d1WyPkcx7n40hKv-ISpjw9_3DTtwbGnTY";
 
 const oauth2Client = new google.auth.OAuth2(
 	CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
@@ -33,10 +33,11 @@ const drive = google.drive({
 
 const print = (fruits) => {
     for(let i=0; i<5; i++){
-        console.log(idxToFruits[i]);
+        console.log(colors.black.bgGreen(idxToFruits[i]));
         fruits[i].forEach(element => {
             console.log(element);
         });
+        if (fruits[i].size === 0) console.log('No Vendor');
     }
 }
 
@@ -59,7 +60,7 @@ const assignFruits = (vendor_id, prediction) => {
 const assignLocation = (vendor_id, ans) => {
     locations.set(vendor_id, [...ans]);
     for (let [key, _] of locations) {
-        console.log(`${key} => ${locations.get(key)}`);
+        console.log(colors.italic.bgGray.brightRed(`${key} => ${locations.get(key)}`));
       }
 }
 

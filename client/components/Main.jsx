@@ -4,7 +4,8 @@ import {
   Popup,
   Marker,
   MapContainer,
-  useMapEvents
+  useMapEvents,
+  Polyline
 } from "react-leaflet";
 import axios from 'axios'
 import L from 'leaflet'
@@ -14,6 +15,7 @@ function Main() {
   const [location, setLocation] = useState([0, 0]);
   const [fruits, setFruits] = useState(new Set());
   const [list, setList] = useState([]);
+  const [route, setRoute] = useState([]);
   const data = [
     { fruit: "Banana", url: "../images/Banana.jpg" },
     { fruit: "Cabbage", url: "../images/Cabbage.jpg" },
@@ -60,6 +62,7 @@ function Main() {
     fruits.forEach((value)=>{
       send.push(value);
     });
+    setRoute([]);
     try{
       const {data} = await axios.post('http://localhost:8000/api/v2/nearest_vendors/sort_by_counts', {client_location: location, fruitsList: send});
       if (data?.success){
@@ -82,15 +85,15 @@ function Main() {
       }
     );
   }, []);
-
+  
   return (
     <div className="main">
       <div className="sub-main left">
         <h2>Client</h2>
         <div><span>Location:</span> {`${location[0]}, ${location[1]}`}</div>
       <MapContainer 
-        center={[0,0]}
-        zoom={9}
+        center={[28.5278208, 77.2538368]}
+        zoom={12}
         style={{
           height: "100%",
           width: "100%",
@@ -105,15 +108,21 @@ function Main() {
         <Marker position={location}>
           <Popup>Your Current Location</Popup>
         </Marker>
+        
+        <Polyline color="green" positions={route}></Polyline>
         {list?.map((e)=>{
           return (
-            <Marker key={e.vendor_id} icon={vendorIcon} position={[...e.position]}>
+            <Marker key={e.vendor_id} icon={vendorIcon} 
+              eventHandlers={{
+                click: () => {setRoute([...e.location_info[0]])},
+              }} position={[...e.position]}>
               <Popup>
               {e.fruit_stocks.map((f, idx)=>(
                 <><strong>{idx+1}. {f.charAt(0).toUpperCase() + f.slice(1)}</strong><br/> </>
                 ))} 
               <br/>
-              <span>Distance:</span> {e.distance.toFixed(1)} km
+              <span>Distance:</span> {(e.location_info[1]['distance']/1000).toFixed(2)} km <br/>
+              <span>Time to Travel:</span> {(e.location_info[1]['duration']/60).toFixed(0)} mins
               </Popup>
             </Marker>
           )

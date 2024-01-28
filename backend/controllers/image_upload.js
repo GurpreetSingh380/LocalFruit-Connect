@@ -17,7 +17,7 @@ function createReadableStream(buffer) {
 const CLIENT_ID="534827030960-v4si5kctopvog12lkiumo8dug1hoe1qe.apps.googleusercontent.com",
 	CLIENT_SECRET="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",
 	REDIRECT_URI="https://developers.google.com/oauthplayground",
-	REFRESH_TOKEN="1//04ZK2lQhghFUUCgYIARAAGAQSNwF-L9Ir6o4k35Iq4yponRDbATxryqq40Cz3kBDGsyIXQTSIL3SWRIB7hacSCCXv-xPXBSARPZc";
+	REFRESH_TOKEN="1//04TtIQ7lADMeGCgYIARAAGAQSNwF-L9Ir_lhq3mhoegfWSUKSGX5EPgcTgoP4t6ONW9d1WyPkcx7n40hKv-ISpjw9_3DTtwbGnTY";
 
 const oauth2Client = new google.auth.OAuth2(
 	CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
@@ -32,6 +32,7 @@ const drive = google.drive({
 
 export const imageUploadController = async(req, res) => {
 	try{
+		console.log("Inside");
 		const response = await drive.files.create({
 			requestBody: {
 				name: 'file'

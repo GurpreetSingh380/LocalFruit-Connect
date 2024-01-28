@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 app.use('/api/v2/nearest_vendors', nearestRoutes);
 
 io.on('connection', (socket)=>{
-    console.log("What is socket_id: ", socket.id);
+    console.log("Socket_id: ", socket.id);
     socket.on("backend", async(payload)=>{
       switch (payload.type) {
         case 'update_image':
