@@ -76,5 +76,6 @@ span{
     flex-direction: column;
     justify-content: center;
     padding: 10px;
+    margin: 1.4rem;
   }
 }

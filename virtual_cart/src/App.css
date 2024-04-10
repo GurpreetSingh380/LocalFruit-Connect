@@ -8,7 +8,7 @@ span{
 }
 .main{
   width: 98vw;
-  height: 90vh;
+  height: 98vh;
   background-color: #a9c3c3;
   display: flex;
   justify-content: center;
@@ -17,8 +17,14 @@ span{
 }
 
 .sub-main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
   min-width: 49vw;
   height: 90vh;
+  flex: 1;
 }
 
 .icon-bound{
@@ -43,4 +49,13 @@ img{
 
 .app-main{
   display: flex;
+}
+
+@media screen and (max-width: 920px) {
+  .main{
+    flex-direction: column;
+  }
+  .sub-main{
+    height: 50vh;
+  }
 }

@@ -18,7 +18,7 @@ const Canvas = () => {
   const [canvas, setCanvas] = useState(null);
   const canvasRef = useRef(null);
   const host_url = '192.168.1.5:5000';
-  
+
   useEffect(() => {
     getId();
     const newCanvas = new fabric.Canvas(canvasRef.current, {
@@ -117,7 +117,7 @@ const Canvas = () => {
 
   return (
     <div className="main">
-      <div className="d-flex justify-content-center align-items-center flex-column sub-main">
+      <div className="sub-main">
         <h1 className="my-2">Virtual Cart</h1>
         <p>
           <span>Location:</span> {location.map((e) => e + "  ")}
@@ -147,8 +147,8 @@ const Canvas = () => {
           center={[28.560268, 77.096308]}
           zoom={9}
           style={{
-            height: "40vh",
-            width: "40vw",
+            height: "100%",
+            width: "100%",
             border: "1px solid black",
             borderRadius: "8px",
           }}
@@ -164,7 +164,7 @@ const Canvas = () => {
           <ClickEventHandler />
         </MapContainer>
       </div>
-      <div className="d-flex justify-content-center flex-column sub-main">
+      <div className="sub-main">
         <canvas ref={canvasRef} />
       </div>
     </div>

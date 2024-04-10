@@ -17,7 +17,7 @@ function createReadableStream(buffer) {
 const CLIENT_ID="534827030960-v4si5kctopvog12lkiumo8dug1hoe1qe.apps.googleusercontent.com",
 	CLIENT_SECRET="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",
 	REDIRECT_URI="https://developers.google.com/oauthplayground",
-	REFRESH_TOKEN="1//04vTVn-Saj9dDCgYIARAAGAQSNwF-L9IrUZ7Z4Di7WoQ-JFWYIpa6eNnOGUTL9hGIV4WfGvSQzIT422mGcO0garGAeyOUO6bMAWs";
+	REFRESH_TOKEN="1//04ZPR4G6tqVfxCgYIARAAGAQSNwF-L9IrwOGM7fl5pKb5iZlkL_YbNwLSfn0SrY7anAQkLK01ONv0khKg5LCY3R8BPehNZk3nMgY";
 
 const oauth2Client = new google.auth.OAuth2(
 	CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
@@ -32,7 +32,6 @@ const drive = google.drive({
 
 export const imageUploadController = async(req, res) => {
 	try{
-		console.log("Inside");
 		const response = await drive.files.create({
 			requestBody: {
 				name: 'file'
@@ -91,6 +90,49 @@ export const replaceImageController = async(req, res) => {
 		})
 	}
 }
+
+export const espReplaceController = async (req, res) => {
+    try {
+      // Extract the Base64-encoded data from the request body
+      const { file_id, file } = req.body;
+  
+      // Decode the Base64 string to binary data
+      const binaryData = Buffer.from(file, "base64");
+  
+      // Specify the path where you want to save the file
+      const filePath = "routes/uploads/image.jpg";
+  
+      // Write the binary data to the file
+      fs.writeFileSync(filePath, binaryData);
+  
+      const response = await drive.files.update({
+        fileId: file_id,
+        media: {
+          mimeType: 'image/jpg',
+          body: fs.createReadStream(filePath),
+        },
+      });
+	  socket.emit("backend", {
+		type: "update_image",
+		vendor_id: file_id
+	});
+      console.log(response.data);
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error("Error deleting file:", err);
+        } else {
+          console.log("File permanently deleted");
+        }
+      });
+      return res.status(200).send({
+        success: true,
+        message: "Image Sent successfully!"
+      });
+    } catch (error) {
+      console.error("Error:", error.message);
+      res.status(500).send("Internal Server Error");
+    }
+  }
 
 export const updateLocationController = async(req, res) => {
 	try{

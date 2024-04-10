@@ -16,6 +16,7 @@ function Main() {
   const [fruits, setFruits] = useState(new Set());
   const [list, setList] = useState([]);
   const [route, setRoute] = useState([]);
+  const host_url = '192.168.1.5:8000';
   const data = [
     { fruit: "Banana", url: "../images/Banana.jpg" },
     { fruit: "Cabbage", url: "../images/Cabbage.jpg" },
@@ -64,7 +65,7 @@ function Main() {
     });
     setRoute([]);
     try{
-      const {data} = await axios.post('http://localhost:8000/api/v2/nearest_vendors/sort_by_counts', {client_location: location, fruitsList: send});
+      const {data} = await axios.post(`http://${host_url}/api/v2/nearest_vendors/sort_by_counts`, {client_location: location, fruitsList: send});
       if (data?.success){
         setList(data.fruitsList);
         console.log(data);
@@ -121,8 +122,8 @@ function Main() {
                 <><strong>{idx+1}. {f.charAt(0).toUpperCase() + f.slice(1)}</strong><br/> </>
                 ))} 
               <br/>
-              <span>Distance:</span> {(e.location_info[1]['distance']/1000).toFixed(2)} km <br/>
-              <span>Time to Travel:</span> {(e.location_info[1]['duration']/60).toFixed(0)} mins
+              <span>Distance:</span> {(e.distance).toFixed(2)} km <br/>
+              {/* <span>Time to Travel:</span> {(e.location_info[1]['duration']/60).toFixed(0)} mins */}
               </Popup>
             </Marker>
           )
