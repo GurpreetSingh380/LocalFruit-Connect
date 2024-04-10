@@ -17,7 +17,8 @@ const Canvas = () => {
   const [id, setId] = useState(0);
   const [canvas, setCanvas] = useState(null);
   const canvasRef = useRef(null);
-
+  const host_url = '192.168.1.5:5000';
+  
   useEffect(() => {
     getId();
     const newCanvas = new fabric.Canvas(canvasRef.current, {
@@ -34,7 +35,7 @@ const Canvas = () => {
 
   const getId = async () => {
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/upload_image"
+      `http://${host_url}/api/v1/upload_image`
     );
     setId(data?.file_id);
   };
@@ -44,7 +45,7 @@ const Canvas = () => {
       const photoData = new FormData();
       photoData.append("file", photo);
       photoData.append("file_id", id);
-      await axios.post("http://localhost:5000/api/v1/replace_image", photoData);
+      await axios.post(`http://${host_url}/api/v1/replace_image`, photoData);
     } catch (error) {
       console.log(error.message);
     }
@@ -102,7 +103,7 @@ const Canvas = () => {
 
   const sendLocation = async () => {
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/update_location",
+      `http://${host_url}/api/v1/update_location`,
       { name: location.toString(), file_id: id }
     );
     console.log(data?.message);
